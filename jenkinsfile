@@ -1,31 +1,21 @@
-pipeline {
-    agent any
-    tools{
-        maven 'maven_3_8_6'
-    }
-    stages{
-        stage('Build Maven'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/laban2000/guvi-geek.git']]])
-                sh 'mvn clean install'
-            }
-        }
-        stage('Build docker image'){
-            steps{
-                script{
-                    sh 'docker build -t abi1217/guvi geek .'
-                }
-            }
-        }
-        stage('Push image to Hub'){
-            steps{
-                script{
-                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                   sh 'docker login -u abi1217 -p ${dockerhubpwd}'
+node{
+   stage('SCM Checkout'){
+     git 'https://github.com/laban2000/guvi-geek.git'
+   }
+   stage('Compile-Package'){
 
-}
-                   sh 'docker push abi1217/guvi geek'
-                }
-            }
-        }
-        
+      def mvnHome =  tool name: 'maven3', type: 'maven'   
+      sh "${mvnHome}/bin/mvn clean package"
+	  sh 'mv target/myweb*.war target/newapp.war'
+   }
+   stage('Build Docker Imager'){
+   sh 'docker build -t abi1217/guvi geek .'
+   }
+   stage('Docker Image Push'){
+   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhub-pwd')]) {
+   sh "docker login -u abi1217 -p ${dockerhub-pwd}"
+    }
+   sh 'docker push abi1217/guvigeek'
+   }
+   }  
+
