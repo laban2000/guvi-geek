@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.javatechie</groupId>
-	<artifactId>devops-integration</artifactId>
+	<artifactId>guvi geek</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>devops-integration</name>
-	<description>Demo project for Spring Boot</description>
+	<name>guvi geek</name>
+	<description>sample.java</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -57,7 +57,8 @@
 				<artifactId>git-commit-id-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>devops-integration</finalName>
+		<finalName>guvi geek.jar</finalName>
 	</build>
 
 </project>
+
