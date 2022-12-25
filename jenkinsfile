@@ -3,10 +3,6 @@ node{
      git 'https://github.com/laban2000/guvi-geek.git'
    }
    stage('Compile-Package'){
-
-      def mvnHome =  tool name: 'maven3', type: 'maven'   
-      sh "${mvnHome}/bin/mvn clean package"
-	  sh 'mv target/myweb*.war target/newapp.war'
    }
    stage('Build Docker Imager'){
    sh 'docker build -t abi1217/guvi geek .'
